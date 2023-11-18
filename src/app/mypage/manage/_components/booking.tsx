@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
-import { bookingStatus, bookingStatusColor } from "../../book/page";
+import { bookingStats, bookingStatusColor } from "../../book/Book";
 import { Confirm } from "./confirm";
 
 interface IBooking {
