@@ -16,6 +16,7 @@ import {
 } from "@heroicons/react/20/solid";
 import Image from "next/image";
 import Link from "next/link";
+import { ReactNode } from "react";
 
 export default async function Home() {
   const session = await getServerAuthSession();
@@ -37,10 +38,36 @@ export default async function Home() {
 
   return (
     <>
-      <Header />
       <MainPosts />
-      <BottomNav />
+      <BottomNav>
+        <Navigation />
+      </BottomNav>
     </>
+  );
+}
+
+function Navigation() {
+  return (
+    <ul className="flex flex-row justify-around">
+      <li className="flex flex-col items-center justify-center gap-1">
+        <div className="flex aspect-square  content-center justify-center">
+          <HomeIcon className="w-7" />
+        </div>
+        <span className="text-xs uppercase">홈</span>
+      </li>
+      <li className="flex flex-col items-center justify-center gap-1">
+        <div className="flex aspect-square  content-center justify-center">
+          <MagnifyingGlassIcon className="w-7" />
+        </div>
+        <span className="text-xs uppercase">검색</span>
+      </li>
+      <li className="flex flex-col items-center justify-center gap-1">
+        <div className="flex aspect-square  content-center justify-center">
+          <UserIcon className="w-7" />
+        </div>
+        <span className="text-xs uppercase">마이페이지</span>
+      </li>
+    </ul>
   );
 }
 
@@ -89,7 +116,7 @@ function MainPosts() {
       <h3 className="px-4 text-2xl font-bold" id="#aesthetic">
         미용
       </h3>
-      <div className="flex flex-col gap-4 px-6">
+      <div className="flex flex-col gap-6 px-6">
         <Post />
         <Post />
         <Post />
@@ -100,15 +127,7 @@ function MainPosts() {
   );
 }
 
-function Header() {
-  return (
-    <header className="sticky top-0 isolate z-10 px-4 py-2 backdrop-blur">
-      <div className="text-2xl font-bold italic">SVK Shop</div>
-    </header>
-  );
-}
-
-function BottomNav() {
+export function BottomNav({ children }: { children?: ReactNode }) {
   return (
     <nav className="sticky bottom-0 w-full border-t-2 bg-background pb-3 pt-2 text-primary">
       <ul className="flex flex-row justify-around">
