@@ -1,4 +1,4 @@
-import { BottomNav } from "../_components/bottom-nav";
+import { BottomNav } from "../page";
 import Booking from "../_components/bookingBtn";
 
 export default function RootLayout({
