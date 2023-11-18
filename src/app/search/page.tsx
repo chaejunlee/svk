@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -8,17 +9,35 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useRouter } from "next/navigation";
+import { useForm, type SubmitHandler } from "react-hook-form";
+
+type FormValues = {
+  item: string;
+  location: string;
+  priceLow: string;
+  priceHigh: string;
+};
 
 export default function Page() {
+  const { register, handleSubmit } = useForm<FormValues>();
+  const router = useRouter();
+  const onSubmit: SubmitHandler<FormValues> = (data) =>
+    router.push(`/search/result?low=${data.priceLow}&high=${data.priceHigh}`);
+
   return (
     <div className="min-h-screen">
-      <form className="flex flex-col gap-4 p-6">
+      <form
+        className="flex flex-col gap-4 p-6"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div>
           <Label className="text-sm font-semibold">검색어</Label>
           <Input
             type="text"
             className="mt-2 text-base"
             placeholder="검색어를 입력해주세요."
+            {...register("item")}
           />
         </div>
         <div>
@@ -40,6 +59,7 @@ export default function Page() {
             type="mt-2 text"
             className="mt-4 text-base"
             placeholder="위치를 입력해주세요."
+            {...register("location")}
           />
         </div>
         <div>
@@ -52,6 +72,7 @@ export default function Page() {
                 className="grow text-base"
                 placeholder="최소 가격"
                 defaultValue={10}
+                {...register("priceLow")}
               />
             </div>
             <span className="text-lg font-bold">~</span>
@@ -61,7 +82,8 @@ export default function Page() {
                 type="number"
                 className="grow text-base"
                 placeholder="최대 가격"
-                defaultValue={100}
+                defaultValue={50}
+                {...register("priceHigh")}
               />
             </div>
           </div>

@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { items, storePost } from "@/server/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, gt, lt } from "drizzle-orm";
 
 export const itemRouter = createTRPCRouter({
   getAllItems: protectedProcedure
@@ -29,6 +29,20 @@ export const itemRouter = createTRPCRouter({
 
       return {
         post,
+      };
+    }),
+
+  getFilteredItems: protectedProcedure
+    .input(z.object({ low: z.number().min(1), high: z.number().min(1) }))
+    .query(async ({ input, ctx }) => {
+      const item = await ctx.db
+        .select()
+        .from(items)
+        .where(gt(items.price, input.low))
+        .where(lt(items.price, input.high));
+
+      return {
+        item,
       };
     }),
 });
