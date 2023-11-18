@@ -283,14 +283,10 @@ export default function Page() {
                 height={25}
                 className="rounded-full"
               />
-              <div>John</div>
+              <div>hnu***</div>
               <div className="text-xs text-slate-400">★3.5 • 5min ago</div>
             </div>
-            <div>
-              Lorem ipsum is placeholder text commonly used in the graphic,
-              print, and publishing industries for previewing layouts and visual
-              mockups.
-            </div>
+            <div className="text-sm">뷰맛집 미용실.</div>
           </div>
           <div className="my-2 mb-10 flex flex-col gap-2">
             <div className="flex items-center gap-2">
@@ -301,13 +297,13 @@ export default function Page() {
                 height={25}
                 className="rounded-full"
               />
-              <div>Amy</div>
+              <div>enu***</div>
               <div className="text-xs text-slate-400">★3.5 • 7 hours ago</div>
             </div>
-            <div>
-              Lorem ipsum is placeholder text commonly used in the graphic,
-              print, and publishing industries for previewing layouts and visual
-              mockups.
+            <div className="text-sm">
+              허리내려오는 긴머리라 머리결 좋아질까 해서 수분케어했는데 스팀
+              한번말고는 다른케어는 없었어요 ~~^^ 근데 머리컷이 넘 맘에드네요
+              드라이도 이쁘게 해주었고 설명도 친절하게 해주셨어요~
             </div>
           </div>
           <div className="my-2 mb-10 flex flex-col gap-2">
@@ -319,14 +315,10 @@ export default function Page() {
                 height={25}
                 className="rounded-full"
               />
-              <div>Susan</div>
+              <div>sus***</div>
               <div className="text-xs text-slate-400">★4.2 • a day ago</div>
             </div>
-            <div>
-              Lorem ipsum is placeholder text commonly used in the graphic,
-              print, and publishing industries for previewing layouts and visual
-              mockups.
-            </div>
+            <div className="text-sm">뷰맛집 미용실.</div>
           </div>
           <div className="my-2 mb-10 flex flex-col gap-2">
             <div className="flex items-center gap-2">
@@ -337,31 +329,13 @@ export default function Page() {
                 height={25}
                 className="rounded-full"
               />
-              <div>Lauren</div>
+              <div>skk***</div>
               <div className="text-xs text-slate-400">★2 • 2 days ago</div>
             </div>
-            <div>
-              Lorem ipsum is placeholder text commonly used in the graphic,
-              print, and publishing industries for previewing layouts and visual
-              mockups.
-            </div>
-          </div>
-          <div className="my-2 mb-10 flex flex-col gap-2">
-            <div className="flex items-center gap-2">
-              <Image
-                src="https://placehold.co/400/png"
-                alt="profile"
-                width={25}
-                height={25}
-                className="rounded-full"
-              />
-              <div>Steve</div>
-              <div className="text-xs text-slate-400">★5 • a week ago</div>
-            </div>
-            <div>
-              Lorem ipsum is placeholder text commonly used in the graphic,
-              print, and publishing industries for previewing layouts and visual
-              mockups.
+            <div className="text-sm">
+              허리내려오는 긴머리라 머리결 좋아질까 해서 수분케어했는데 스팀
+              한번말고는 다른케어는 없었어요 ~~^^ 근데 머리컷이 넘 맘에드네요
+              드라이도 이쁘게 해주었고 설명도 친절하게 해주셨어요~
             </div>
           </div>
         </div>

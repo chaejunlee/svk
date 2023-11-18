@@ -110,7 +110,7 @@ function Header() {
 
 function BottomNav() {
   return (
-    <nav className="bg-background text-primary sticky bottom-0 w-full border-t-2 pb-3 pt-2">
+    <nav className="sticky bottom-0 w-full border-t-2 bg-background pb-3 pt-2 text-primary">
       <ul className="flex flex-row justify-around">
         <li className="flex flex-col items-center justify-center gap-1">
           <div className="flex aspect-square  content-center justify-center">
