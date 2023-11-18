@@ -25,7 +25,6 @@ export default async function Page({ params }: { params: { id: string } }) {
   const rating = Math.round(Math.random() * 5 * 10) / 10;
   const reviews = Math.round(Math.random() * 1000);
 
-  console.log(p?.id, items?.i);
   return (
     <>
       <GoBack />
@@ -67,19 +66,19 @@ export default async function Page({ params }: { params: { id: string } }) {
             <div className=" flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-blue-100 hover:bg-blue-200">
               <PhoneIcon width={30} />
             </div>
-            <div>Call</div>
+            <div>전화하기</div>
           </div>
           <div className="flex flex-col items-center justify-center">
             <div className=" flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-blue-100 hover:bg-blue-200">
               <GlobeAsiaAustraliaIcon width={30} />
             </div>
-            <div>Website</div>
+            <div>웹사이트</div>
           </div>
           <div className="flex flex-col items-center justify-center">
             <div className=" flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-blue-100 hover:bg-blue-200">
               <ShareIcon width={30} />
             </div>
-            <div>Share</div>
+            <div>공유</div>
           </div>
         </div>
         <div className="mt-10 scroll-mt-32 text-2xl font-bold" id="hours">
@@ -87,31 +86,31 @@ export default async function Page({ params }: { params: { id: string } }) {
         </div>
         <div className="mt-2 flex flex-col gap-2">
           <div className="flex">
-            <div className="w-20">Mon</div>
+            <div className="w-12">월</div>
             <div>11:30 AM - 10:00 PM</div>
           </div>
           <div className="flex">
-            <div className="w-20">Tue</div>
+            <div className="w-12">화</div>
             <div>11:30 AM - 10:00 PM</div>
           </div>
           <div className="flex">
-            <div className="w-20">Wed</div>
+            <div className="w-12">수</div>
             <div>12:00 PM - 10:00 PM</div>
           </div>
           <div className="flex">
-            <div className="w-20">Thu</div>
+            <div className="w-12">목</div>
             <div>11:30 AM - 10:00 PM</div>
           </div>
           <div className="flex">
-            <div className="w-20">Fri</div>
+            <div className="w-12">금</div>
             <div>11:30 AM - 12:00 AM</div>
           </div>
           <div className="flex">
-            <div className="w-20 text-red-500">Sat</div>
+            <div className="w-12 text-red-500">토</div>
             <div>11:30 AM - 12:00 AM</div>
           </div>
           <div className="flex">
-            <div className="w-20 text-blue-500">Sun</div>
+            <div className="w-12 text-blue-500">일</div>
             <div>11:30 AM - 10:00 PM</div>
           </div>
         </div>
@@ -131,10 +130,9 @@ export default async function Page({ params }: { params: { id: string } }) {
                     src={item.items.url!}
                     alt={"item"}
                     className="h-24 w-24  rounded-lg bg-blue-100"
-                    width={20}
-                    height={20}
+                    width={60}
+                    height={60}
                   />
-                  {/* <div className="h-24 w-24  rounded-lg bg-blue-100"></div> */}
                   <div className="flex w-60 flex-col gap-1">
                     <span className="text-lg">{item.items.item}</span>
                     <span className="break text-sm">

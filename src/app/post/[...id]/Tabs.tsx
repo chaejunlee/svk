@@ -24,7 +24,7 @@ export function Tabs() {
   };
 
   return (
-    <div className="sticky top-[56px] flex justify-around border-b-2 bg-background/80 px-2">
+    <div className="sticky top-[56px] z-10 flex justify-around border-b-2 bg-background/80 px-2">
       <Link href={"#home"} onClick={handleScroll}>
         <div
           onClick={() => menuClick(1)}
