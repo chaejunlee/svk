@@ -1,15 +1,14 @@
-import { getServerAuthSession } from "@/server/auth";
+import { Badge } from "@/components/ui/badge";
 import {
   ChevronLeftIcon,
-  BookmarkIcon,
   ShareIcon,
-  EllipsisVerticalIcon,
   PhoneIcon,
   GlobeAsiaAustraliaIcon,
   QrCodeIcon,
 } from "@heroicons/react/20/solid";
 import Image from "next/image";
 import Link from "next/link";
+import { BottomNav } from "../page";
 
 export default function Page() {
   return (
@@ -25,13 +24,16 @@ export default function Page() {
             height="500"
           />
 
-          <div className="absolute bottom-0 flex flex-col gap-2 px-6 py-6 drop-shadow-lg">
-            <div className="text-2xl font-bold">
+          <div className="absolute bottom-0 flex flex-col gap-2 px-6 py-6">
+            <Badge variant="default" className="w-fit">
+              $$$
+            </Badge>
+            <div className="text-2xl font-bold  drop-shadow-lg">
               롯데 미용실 - Lotte Beauty Salon
             </div>
-            <div>
-              <span className="text-primary">★ 3.5</span>
-              <span className="text-primary"> (123)</span>
+            <div className="text-primary  drop-shadow-lg">
+              <span>★ 3.5</span>
+              <span> (123)</span>
             </div>
           </div>
         </div>
@@ -89,7 +91,23 @@ export default function Page() {
           </div>
         </div>
       </div>
+      <BottomNav>
+        <Booking />
+      </BottomNav>
     </>
+  );
+}
+
+function Booking() {
+  return (
+    <div className="flex px-2">
+      <Link
+        href="/book"
+        className="bg-primary hover:bg-primary/80 flex h-12 w-full items-center justify-center rounded-lg font-semibold text-white no-underline transition"
+      >
+        예약하기
+      </Link>
+    </div>
   );
 }
 
