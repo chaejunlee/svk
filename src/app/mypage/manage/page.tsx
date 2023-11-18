@@ -1,5 +1,6 @@
 import { api } from "@/trpc/server";
-import Booking from "./components/booking";
+import Booking from "./_components/booking";
+// import Booking from "./components/booking";
 
 export default async function Page() {
   const books = await api.book.manageBooks.query();
