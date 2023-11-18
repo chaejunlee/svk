@@ -8,13 +8,13 @@ export default async function Page() {
   });
   console.log(item);
   return (
-    <div className="min-h-[100vh]">
+    <div className="h-[100dvh] pb-16">
       {item.map((i) => (
         <div className="flex items-center gap-5 p-3" key={i.id}>
           <Image
             src={i.url!}
             alt={"item"}
-            className="h-24 w-24  rounded-lg bg-blue-100"
+            className="h-24 w-24 rounded-lg bg-blue-100 object-cover"
             width={60}
             height={60}
           />
