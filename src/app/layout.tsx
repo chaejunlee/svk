@@ -23,6 +23,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" style={{ scrollBehavior: "smooth" }}>
+      <head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
+      </head>
       <body className={`font-sans ${inter.variable}`}>
         <TRPCReactProvider cookies={cookies().toString()}>
           <main className="bg-background relative mx-auto flex h-[100dvh] w-full min-w-[300px] max-w-lg flex-col overflow-scroll outline outline-2 outline-gray-200">
