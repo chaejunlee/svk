@@ -1,5 +1,6 @@
-import { BottomNav } from "../_components/bottom-nav";
-import { Navigation } from "../_components/navigation";
+import { Navigation } from "@/app/_components/navigation";
+import { BottomNav } from "../../_components/bottom-nav";
+import GoBack from "@/app/_components/goback";
 
 export default function RootLayout({
   children,
@@ -8,6 +9,7 @@ export default function RootLayout({
 }) {
   return (
     <>
+      <GoBack />
       {children}
       <BottomNav>
         <Navigation />
