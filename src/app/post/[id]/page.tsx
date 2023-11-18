@@ -17,11 +17,9 @@ export default async function Page({ params }: { params: { id: string } }) {
   const post = await api.post.getPost.query({ id: Number.parseInt(params.id) });
 
   const p = post.post[0]?.storePost;
-  const items =
-    p &&
-    (await api.item.getAllItems.query({
-      id: p.id,
-    }));
+  const items = await api.item.getAllItems.query({
+    id: p.id,
+  });
   const rating = Math.round(Math.random() * 5 * 10) / 10;
   const reviews = Math.round(Math.random() * 1000);
 

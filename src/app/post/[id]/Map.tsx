@@ -48,6 +48,7 @@ export default function Map({ name, address }: IMap) {
             pixelOffset: {
               width: 0,
               height: -40,
+              equals: () => true,
             },
           }}
         >
