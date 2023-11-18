@@ -11,7 +11,7 @@ import { eq } from "drizzle-orm";
 export const postRouter = createTRPCRouter({
   getAllPosts: protectedProcedure
     .input(z.undefined())
-    .query(async ({ input, ctx }) => {
+    .query(async ({ ctx }) => {
       const posts = await ctx.db
         .select()
         .from(storePost)
