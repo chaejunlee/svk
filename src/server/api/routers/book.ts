@@ -35,6 +35,18 @@ export const bookRouter = createTRPCRouter({
 
       return bookings;
     }),
+
+  confirm: protectedProcedure
+    .input(z.object({ id: z.number(), status: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      if (!ctx.session.user) {
+        throw new Error("You must be logged in to confirm a booking");
+      }
+      await ctx.db
+        .update(books)
+        .set({ status: input.status })
+        .where(eq(books.id, input.id));
+    }),
   mutate: protectedProcedure
     .input(
       z.object({

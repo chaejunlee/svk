@@ -4,14 +4,14 @@ import { api } from "@/trpc/server";
 
 export const bookingStatus = {
   pending: "승인 대기",
-  approved: "승인 완료",
+  confirmed: "승인 완료",
   cancelled: "취소",
   archive: "방문 완료",
 };
 
 export const bookingStatusColor = {
   pending: "secondary",
-  approved: "default",
+  confirmed: "default",
   cancelled: "destructive",
   archive: "outline",
 } as const;
