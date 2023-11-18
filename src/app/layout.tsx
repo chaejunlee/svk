@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 import { TRPCReactProvider } from "@/trpc/react";
 import { getServerAuthSession } from "@/server/auth";
 import Link from "next/link";
+import { Suspense } from "react";
 
 export const metadata = {
   title: "Create T3 App",
@@ -35,11 +36,13 @@ export default function RootLayout({
         />
       </head>
       <body className={`font-sans`}>
-        <TRPCReactProvider cookies={cookies().toString()}>
-          <main className="relative mx-auto flex h-[100dvh] w-full min-w-[300px] max-w-lg flex-col overflow-scroll bg-background outline outline-2 outline-gray-200">
-            <CheckSession>{children}</CheckSession>
-          </main>
-        </TRPCReactProvider>
+        <Suspense fallback={<div>Loading...</div>}>
+          <TRPCReactProvider cookies={cookies().toString()}>
+            <main className="relative mx-auto flex h-[100dvh] w-full min-w-[300px] max-w-lg flex-col overflow-scroll bg-background outline outline-2 outline-gray-200">
+              <CheckSession>{children}</CheckSession>
+            </main>
+          </TRPCReactProvider>
+        </Suspense>
       </body>
     </html>
   );
