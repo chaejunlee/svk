@@ -11,13 +11,55 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import GoBack from "../_components/goback";
+import {
+  GoogleMap,
+  useJsApiLoader,
+  MarkerF,
+  InfoWindowF,
+} from "@react-google-maps/api";
+
+const place = {
+  name: "Korean Hair Salon",
+  address: "5075 Stevens Creek Blvd, Santa Clara, CA 95051",
+  latitude: 37.32,
+  longitude: -122,
+};
+
+const containerStyle = {
+  width: "100%",
+  height: "24rem",
+  borderRadius: "20px",
+};
+
+const center = {
+  lat: 37.32,
+  lng: -122,
+};
 
 export default function Page() {
   const [menu, setMenu] = React.useState(1);
   const menuClick = (m: number) => {
     setMenu(m);
   };
-  console.log(menu);
+
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    // first prevent the default behavior
+    e.preventDefault();
+    // get the href and remove everything before the hash (#)
+    const href = e.currentTarget.href;
+    const targetId = href.replace(/.*\#/, "");
+    // get the element by id and use scrollIntoView
+    const elem = document.getElementById(targetId);
+    elem?.scrollIntoView({
+      behavior: "smooth",
+    });
+  };
+
+  // MAPS
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: "AIzaSyCKWRyewwCvOEcYPYjxPlFMhmjKPVL9RWI",
+  });
 
   return (
     <>
@@ -50,8 +92,8 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <div className="sticky top-[56px] flex justify-around border-b-2 bg-background/80 px-2">
-        <Link href={"#home"} scroll={true}>
+      <div className="sticky top-[56px] z-10 flex justify-around border-b-2 bg-background/80 px-2">
+        <Link href={"#home"} onClick={handleScroll}>
           <div
             onClick={() => menuClick(1)}
             className="flex h-12 w-12 cursor-pointer items-center justify-center text-gray-400"
@@ -68,7 +110,7 @@ export default function Page() {
             <motion.div layoutId="menu" className="h-[2px] w-12 bg-black" />
           )}
         </Link>
-        <Link href={"#hours"} scroll={true}>
+        <Link href={"#hours"} onClick={handleScroll}>
           <div
             onClick={() => menuClick(2)}
             className="flex h-12 w-12 cursor-pointer items-center justify-center text-gray-400"
@@ -85,7 +127,7 @@ export default function Page() {
             <motion.div layoutId="menu" className="h-[2px] w-12 bg-black" />
           )}
         </Link>
-        <Link href={"#maps"} scroll={true}>
+        <Link href={"#maps"} onClick={handleScroll}>
           <div
             onClick={() => menuClick(3)}
             className="flex h-12 w-12 cursor-pointer items-center justify-center text-gray-400"
@@ -102,7 +144,7 @@ export default function Page() {
             <motion.div layoutId="menu" className="h-[2px] w-12 bg-black" />
           )}
         </Link>
-        <Link href={"#menu"} scroll={true}>
+        <Link href={"#menu"} onClick={handleScroll}>
           <div
             onClick={() => menuClick(4)}
             className="flex h-12 w-12 cursor-pointer items-center justify-center text-gray-400"
@@ -119,7 +161,7 @@ export default function Page() {
             <motion.div layoutId="menu" className="h-[2px] w-12 bg-black" />
           )}
         </Link>
-        <Link href={"#reviews"} scroll={true}>
+        <Link href={"#reviews"} onClick={handleScroll}>
           <div
             onClick={() => menuClick(5)}
             className="flex h-12 w-12 cursor-pointer items-center justify-center text-gray-400"
@@ -194,7 +236,34 @@ export default function Page() {
         <div className="mt-10 scroll-mt-32 text-2xl  font-bold " id="maps">
           지도
         </div>
-        <div className="mt-3 h-96 w-full rounded-lg bg-blue-100"></div>
+        <div className="mt-3 h-96 w-full rounded-lg bg-blue-100">
+          {isLoaded && (
+            <GoogleMap
+              mapContainerStyle={containerStyle}
+              center={center}
+              zoom={12}
+            >
+              <MarkerF
+                position={{ lat: place.latitude, lng: place.longitude }}
+              ></MarkerF>
+              <InfoWindowF
+                position={{ lat: place.latitude, lng: place.longitude }}
+                zIndex={1}
+                options={{
+                  pixelOffset: {
+                    width: 0,
+                    height: -40,
+                  },
+                }}
+              >
+                <div>
+                  <h3>{place.name}</h3>
+                  <p>{place.address}</p>
+                </div>
+              </InfoWindowF>
+            </GoogleMap>
+          )}
+        </div>
         <div className="mb-5 mt-10 scroll-mt-32 text-2xl  font-bold " id="menu">
           메뉴
         </div>
