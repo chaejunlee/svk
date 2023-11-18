@@ -10,9 +10,22 @@ export function Tabs() {
     setMenu(m);
   };
 
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    // first prevent the default behavior
+    e.preventDefault();
+    // get the href and remove everything before the hash (#)
+    const href = e.currentTarget.href;
+    const targetId = href.replace(/.*\#/, "");
+    // get the element by id and use scrollIntoView
+    const elem = document.getElementById(targetId);
+    elem?.scrollIntoView({
+      behavior: "smooth",
+    });
+  };
+
   return (
-    <div className="sticky top-[56px] flex justify-around border-b-2 bg-background/80 px-2">
-      <Link href={"#home"} scroll={true}>
+    <div className="sticky top-[56px] z-10 flex justify-around border-b-2 bg-background/80 px-2">
+      <Link href={"#home"} onClick={handleScroll}>
         <div
           onClick={() => menuClick(1)}
           className="flex h-12 w-12 cursor-pointer items-center justify-center text-gray-400"
@@ -27,7 +40,7 @@ export function Tabs() {
           <motion.div layoutId="menu" className="h-[2px] w-12 bg-black" />
         )}
       </Link>
-      <Link href={"#hours"} scroll={true}>
+      <Link href={"#hours"} onClick={handleScroll}>
         <div
           onClick={() => menuClick(2)}
           className="flex h-12 w-12 cursor-pointer items-center justify-center text-gray-400"
@@ -42,7 +55,7 @@ export function Tabs() {
           <motion.div layoutId="menu" className="h-[2px] w-12 bg-black" />
         )}
       </Link>
-      <Link href={"#maps"} scroll={true}>
+      <Link href={"#maps"} onClick={handleScroll}>
         <div
           onClick={() => menuClick(3)}
           className="flex h-12 w-12 cursor-pointer items-center justify-center text-gray-400"
@@ -57,7 +70,7 @@ export function Tabs() {
           <motion.div layoutId="menu" className="h-[2px] w-12 bg-black" />
         )}
       </Link>
-      <Link href={"#menu"} scroll={true}>
+      <Link href={"#menu"} onClick={handleScroll}>
         <div
           onClick={() => menuClick(4)}
           className="flex h-12 w-12 cursor-pointer items-center justify-center text-gray-400"
@@ -72,7 +85,7 @@ export function Tabs() {
           <motion.div layoutId="menu" className="h-[2px] w-12 bg-black" />
         )}
       </Link>
-      <Link href={"#reviews"} scroll={true}>
+      <Link href={"#reviews"} onClick={handleScroll}>
         <div
           onClick={() => menuClick(5)}
           className="flex h-12 w-12 cursor-pointer items-center justify-center text-gray-400"

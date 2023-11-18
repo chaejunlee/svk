@@ -11,9 +11,17 @@ import { Tabs } from "./Tabs";
 import { api } from "@/trpc/server";
 import { BottomNav } from "@/app/_components/bottom-nav";
 import Booking from "@/app/_components/bookingBtn";
+import Map from "./Map";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const post = await api.post.getPost.query({ id: Number.parseInt(params.id) });
+
+  const p = post.post[0]?.storePost;
+  const items =
+    p &&
+    (await api.item.getAllItems.query({
+      id: p.id,
+    }));
   const rating = Math.round(Math.random() * 5 * 10) / 10;
   const reviews = Math.round(Math.random() * 1000);
 
@@ -58,19 +66,19 @@ export default async function Page({ params }: { params: { id: string } }) {
             <div className=" flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-blue-100 hover:bg-blue-200">
               <PhoneIcon width={30} />
             </div>
-            <div>Call</div>
+            <div>전화하기</div>
           </div>
           <div className="flex flex-col items-center justify-center">
             <div className=" flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-blue-100 hover:bg-blue-200">
               <GlobeAsiaAustraliaIcon width={30} />
             </div>
-            <div>Website</div>
+            <div>웹사이트</div>
           </div>
           <div className="flex flex-col items-center justify-center">
             <div className=" flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-blue-100 hover:bg-blue-200">
               <ShareIcon width={30} />
             </div>
-            <div>Share</div>
+            <div>공유</div>
           </div>
         </div>
         <div className="mt-10 scroll-mt-32 text-2xl font-bold" id="hours">
@@ -78,86 +86,65 @@ export default async function Page({ params }: { params: { id: string } }) {
         </div>
         <div className="mt-2 flex flex-col gap-2">
           <div className="flex">
-            <div className="w-20">Mon</div>
+            <div className="w-12">월</div>
             <div>11:30 AM - 10:00 PM</div>
           </div>
           <div className="flex">
-            <div className="w-20">Tue</div>
+            <div className="w-12">화</div>
             <div>11:30 AM - 10:00 PM</div>
           </div>
           <div className="flex">
-            <div className="w-20">Wed</div>
+            <div className="w-12">수</div>
             <div>12:00 PM - 10:00 PM</div>
           </div>
           <div className="flex">
-            <div className="w-20">Thu</div>
+            <div className="w-12">목</div>
             <div>11:30 AM - 10:00 PM</div>
           </div>
           <div className="flex">
-            <div className="w-20">Fri</div>
+            <div className="w-12">금</div>
             <div>11:30 AM - 12:00 AM</div>
           </div>
           <div className="flex">
-            <div className="w-20 text-red-500">Sat</div>
+            <div className="w-12 text-red-500">토</div>
             <div>11:30 AM - 12:00 AM</div>
           </div>
           <div className="flex">
-            <div className="w-20 text-blue-500">Sun</div>
+            <div className="w-12 text-blue-500">일</div>
             <div>11:30 AM - 10:00 PM</div>
           </div>
         </div>
         <div className="mt-10 scroll-mt-32 text-2xl  font-bold " id="maps">
           지도
         </div>
-        <div className="mt-3 h-96 w-full rounded-lg bg-blue-100"></div>
+        <Map name={p?.title} address={p?.location} />
         <div className="mb-5 mt-10 scroll-mt-32 text-2xl  font-bold " id="menu">
           메뉴
         </div>
+
         <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-5">
-            <div className="h-24 w-24  rounded-lg bg-blue-100"></div>
-            <div className="flex w-60 flex-col gap-1">
-              <span className="text-lg">커트</span>
-              <span className="break text-sm">
-                설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명
-                설명 설명 설명 설명
-              </span>
-              <span className=" text-base font-bold">$30.00</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-5">
-            <div className="h-24 w-24  rounded-lg bg-blue-100"></div>
-            <div className="flex w-60 flex-col gap-1">
-              <span className="text-lg">커트</span>
-              <span className="break text-sm">
-                설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명
-                설명 설명 설명 설명
-              </span>
-              <span className=" text-base font-bold">$30.00</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-5">
-            <div className="h-24 w-24  rounded-lg bg-blue-100"></div>
-            <div className="flex w-60 flex-col gap-1">
-              <span className="text-lg">커트</span>
-              <span className="break text-sm">
-                설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명
-                설명 설명 설명 설명
-              </span>
-              <span className=" text-base font-bold">$30.00</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-5">
-            <div className="h-24 w-24  rounded-lg bg-blue-100"></div>
-            <div className="flex w-60 flex-col gap-1">
-              <span className="text-lg">커트</span>
-              <span className="break text-sm">
-                설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명
-                설명 설명 설명 설명
-              </span>
-              <span className=" text-base font-bold">$30.00</span>
-            </div>
-          </div>
+          {items
+            ? items.i.map((item, key) => (
+                <div className="flex items-center gap-5" key={key}>
+                  <Image
+                    src={item.items.url!}
+                    alt={"item"}
+                    className="h-24 w-24  rounded-lg bg-blue-100"
+                    width={60}
+                    height={60}
+                  />
+                  <div className="flex w-60 flex-col gap-1">
+                    <span className="text-lg">{item.items.item}</span>
+                    <span className="break text-sm">
+                      {item.items.description}
+                    </span>
+                    <span className=" text-base font-bold">
+                      ${item.items.price}
+                    </span>
+                  </div>
+                </div>
+              ))
+            : ""}
         </div>
 
         <div>
