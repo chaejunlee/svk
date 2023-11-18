@@ -5,34 +5,81 @@ import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import type { ReactNode, Dispatch, SetStateAction } from "react";
 import { useState } from "react";
 import { ko } from "date-fns/locale";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { api } from "@/trpc/react";
+import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 export default function BookForm() {
+  const router = useRouter();
+  const [time, setTime] = useState<string | undefined>(undefined);
+  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [people, setPeople] = useState<number>(1);
+
+  const { isLoading, mutate } = api.book.mutate.useMutation({
+    onSuccess: () => {
+      router.push("/");
+    },
+  });
+
   return (
-    <form className="pb-8">
-      <h3 className="px-6 py-4 text-xl font-semibold">날짜 선택</h3>
-      <DatePicker />
+    <form
+      className="py-4"
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (!date || !time) return;
+        mutate({
+          date: date,
+          time: time,
+          people: people,
+        });
+      }}
+    >
+      <h3 className="px-6 text-xl font-semibold">날짜 선택</h3>
+      <DatePicker {...{ date, setDate }} />
 
       <h3 className="px-6 py-4 text-xl font-semibold">시간 선택</h3>
-      <TimePicker />
+      <TimePicker {...{ time, setTime }} />
 
       <h3 className="px-6 py-4 text-xl font-semibold">인원 수</h3>
-      <div className="p-4">
+      <div className="px-4 pb-8">
         <Input
           type="number"
           min={1}
           placeholder="인원 수를 입력해주세요."
-          className="w-1/2 text-lg"
-          defaultValue={1}
+          className="w-1/2 text-base"
+          defaultValue={people}
+          onChange={(e) => {
+            setPeople(Number(e.target.value));
+          }}
         />
+      </div>
+
+      <div className="px-4">
+        <Button
+          className="w-full cursor-pointer py-6 text-lg"
+          type="submit"
+          variant="default"
+          disabled={isLoading}
+        >
+          {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+          예약하기
+        </Button>
       </div>
     </form>
   );
 }
 
-function DatePicker() {
-  const [date, setDate] = useState<Date | undefined>(new Date());
+function DatePicker({
+  date,
+  setDate,
+}: {
+  date?: Date;
+  setDate?: Dispatch<SetStateAction<Date | undefined>>;
+}) {
   return (
     <>
       <div className="p-2">
@@ -42,7 +89,6 @@ function DatePicker() {
           onSelect={setDate}
           className="flex rounded-lg"
           fromDate={new Date()}
-          disabled={[new Date("2023-11-30")]}
           locale={ko}
           formatters={{
             formatCaption: (date) =>
@@ -57,7 +103,13 @@ function DatePicker() {
   );
 }
 
-function TimePicker() {
+function TimePicker({
+  time,
+  setTime,
+}: {
+  time?: string;
+  setTime?: Dispatch<SetStateAction<string | undefined>>;
+}) {
   const possibleTimes = [
     { time: "10:00", available: true },
     { time: "11:00", available: true },
@@ -66,10 +118,9 @@ function TimePicker() {
     { time: "14:00", available: true },
     { time: "15:00", available: true },
   ];
-  const [time, setTime] = useState<string | undefined>(undefined);
   return (
     <>
-      <div className="p-4">
+      <div className="px-4 pb-6">
         <RadioGroup
           value={time}
           onValueChange={setTime}
@@ -104,5 +155,24 @@ function TimePicker() {
         </RadioGroup>
       </div>
     </>
+  );
+}
+
+function Booking({ children }: { children: ReactNode }) {
+  return (
+    <div className="flex px-2">
+      <Dialog>
+        <DialogTrigger className="bg-primary hover:bg-primary/80 flex w-full items-center justify-center rounded-lg py-4 font-semibold text-white no-underline transition">
+          예약하기
+        </DialogTrigger>
+        <DialogContent>
+          <div className="flex flex-col gap-2 p-4">
+            <h3 className="text-xl font-semibold">예약하기</h3>
+            <p>아래 예약 정보를 확인해주세요</p>
+          </div>
+          {children}
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 }
