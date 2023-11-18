@@ -14,6 +14,8 @@ export const metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
+export const dynamic = "force-dynamic";
+
 async function CheckSession({ children }: { children: React.ReactNode }) {
   const session = await getServerAuthSession();
 
@@ -25,8 +27,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // const session = await getServerAuthSession();
-
   return (
     <html lang="en" style={{ scrollBehavior: "smooth" }}>
       <head>
