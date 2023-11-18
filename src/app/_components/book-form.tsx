@@ -5,7 +5,12 @@ import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import type { ReactNode, Dispatch, SetStateAction } from "react";
+import {
+  type ReactNode,
+  type Dispatch,
+  type SetStateAction,
+  useState,
+} from "react";
 import { ko } from "date-fns/locale";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { api } from "@/trpc/react";
@@ -14,20 +19,26 @@ import { Loader2 } from "lucide-react";
 
 export default function BookForm() {
   const router = useRouter();
+  const [date, setDate] = useState<Date | undefined>(undefined);
+  const [time, setTime] = useState<string | undefined>(undefined);
+  const [people, setPeople] = useState<number>(1);
 
   const { isLoading, mutate } = api.book.mutate.useMutation({
     onSuccess: async () => {
-      await new Promise((resolve, reject) => {
+      const res = await new Promise((resolve, reject) => {
         const result = window.confirm(
           "예약이 완료되었습니다. 예약 내역을 확인하시겠습니까?",
         );
         if (result) {
           resolve(result);
         } else {
-          reject();
+          router.push("/");
+          reject(null);
         }
       });
-      router.push("/mypage");
+      if (!res) {
+      }
+      router.push("/mypage/book");
     },
   });
 

@@ -9,6 +9,8 @@ import React from "react";
 import GoBack from "../../_components/goback";
 import { Tabs } from "./Tabs";
 import { api } from "@/trpc/server";
+import { BottomNav } from "@/app/_components/bottom-nav";
+import Booking from "@/app/_components/bookingBtn";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const post = await api.post.getPost.query({ id: Number.parseInt(params.id) });
@@ -266,6 +268,9 @@ export default async function Page({ params }: { params: { id: string } }) {
           </div>
         </div>
       </div>
+      <BottomNav>
+        <Booking id={params.id} />
+      </BottomNav>
     </>
   );
 }

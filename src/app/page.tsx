@@ -65,7 +65,11 @@ async function MainPosts() {
           더보기
         </Link>
       </h3>
-      <div className="flex flex-col gap-6 px-6"></div>
+      <div className="flex flex-col gap-6 px-6">
+        {restaurant.map((post) => (
+          <Post key={post.storePost.id} props={post} />
+        ))}
+      </div>
     </div>
   );
 }
