@@ -18,15 +18,29 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default async function Home() {
-  const hello = await api.post.hello.query({ text: "from tRPC" });
   const session = await getServerAuthSession();
 
+  if (!session?.user) {
+    return (
+      <div className="flex h-[100dvh] flex-col items-center justify-center">
+        <h1 className="text-3xl font-bold">Welcome to SVK Shop</h1>
+        <p className="text-lg">Please log in to continue.</p>
+        <Link
+          href="/api/auth/signin"
+          className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
+        >
+          Sign in
+        </Link>
+      </div>
+    );
+  }
+
   return (
-    <main className="bg-background relative mx-auto flex h-[100dvh] max-w-lg flex-col overflow-scroll border-2">
+    <>
       <Header />
       <MainPosts />
       <BottomNav />
-    </main>
+    </>
   );
 }
 

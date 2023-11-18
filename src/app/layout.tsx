@@ -25,7 +25,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`font-sans ${inter.variable}`}>
         <TRPCReactProvider cookies={cookies().toString()}>
-          {children}
+          <main className="bg-background relative mx-auto flex h-[100dvh] max-w-lg flex-col overflow-scroll border-2">
+            {children}
+          </main>
         </TRPCReactProvider>
       </body>
     </html>
