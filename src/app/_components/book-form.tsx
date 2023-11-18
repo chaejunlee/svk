@@ -20,7 +20,17 @@ export default function BookForm() {
   const [people, setPeople] = useState<number>(1);
 
   const { isLoading, mutate } = api.book.mutate.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
+      await new Promise((resolve, reject) => {
+        const result = window.confirm(
+          "예약이 완료되었습니다. 예약 내역을 확인하시겠습니까?",
+        );
+        if (result) {
+          resolve(result);
+        } else {
+          reject();
+        }
+      });
       router.push("/");
     },
   });

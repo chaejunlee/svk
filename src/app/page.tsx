@@ -9,14 +9,10 @@ import {
 } from "@/components/ui/card";
 import { getServerAuthSession } from "@/server/auth";
 import { api } from "@/trpc/server";
-import {
-  HomeIcon,
-  MagnifyingGlassIcon,
-  UserIcon,
-} from "@heroicons/react/20/solid";
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
+import { Navigation } from "./Navigation";
 
 export default async function Home() {
   const session = await getServerAuthSession();
@@ -43,31 +39,6 @@ export default async function Home() {
         <Navigation />
       </BottomNav>
     </>
-  );
-}
-
-function Navigation() {
-  return (
-    <ul className="flex flex-row justify-around">
-      <li className="flex flex-col items-center justify-center gap-1">
-        <div className="flex aspect-square  content-center justify-center">
-          <HomeIcon className="w-7" />
-        </div>
-        <span className="text-xs uppercase">홈</span>
-      </li>
-      <li className="flex flex-col items-center justify-center gap-1">
-        <div className="flex aspect-square  content-center justify-center">
-          <MagnifyingGlassIcon className="w-7" />
-        </div>
-        <span className="text-xs uppercase">검색</span>
-      </li>
-      <li className="flex flex-col items-center justify-center gap-1">
-        <div className="flex aspect-square  content-center justify-center">
-          <UserIcon className="w-7" />
-        </div>
-        <span className="text-xs uppercase">마이페이지</span>
-      </li>
-    </ul>
   );
 }
 
@@ -129,27 +100,8 @@ function MainPosts() {
 
 export function BottomNav({ children }: { children?: ReactNode }) {
   return (
-    <nav className="sticky bottom-0 w-full border-t-2 bg-background pb-3 pt-2 text-primary">
-      <ul className="flex flex-row justify-around">
-        <li className="flex flex-col items-center justify-center gap-1">
-          <div className="flex aspect-square  content-center justify-center">
-            <HomeIcon className="w-7" />
-          </div>
-          <span className="text-xs uppercase">홈</span>
-        </li>
-        <li className="flex flex-col items-center justify-center gap-1">
-          <div className="flex aspect-square  content-center justify-center">
-            <MagnifyingGlassIcon className="w-7" />
-          </div>
-          <span className="text-xs uppercase">검색</span>
-        </li>
-        <li className="flex flex-col items-center justify-center gap-1">
-          <div className="flex aspect-square  content-center justify-center">
-            <UserIcon className="w-7" />
-          </div>
-          <span className="text-xs uppercase">마이페이지</span>
-        </li>
-      </ul>
+    <nav className="bg-background text-primary sticky bottom-0 w-full border-t-2 pb-3 pt-2">
+      {children}
     </nav>
   );
 }

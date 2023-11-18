@@ -21,7 +21,7 @@ function Booking() {
     <div className="flex px-2">
       <Link
         href="/book"
-        className="flex h-12 w-full items-center justify-center rounded-lg bg-primary font-semibold text-white no-underline transition hover:bg-primary/80"
+        className="bg-primary hover:bg-primary/80 flex h-12 w-full items-center justify-center rounded-lg font-semibold text-white no-underline transition"
       >
         예약하기
       </Link>

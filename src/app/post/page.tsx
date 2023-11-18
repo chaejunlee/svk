@@ -43,14 +43,14 @@ export default function Page() {
               <span className="text-primary">★ 3.5 (123)</span>
               <span>미용/네일/카테고리</span>
               <div className="flex gap-2">
-                <span className="flex gap-2 text-destructive">Closed</span>11:00
+                <span className="text-destructive flex gap-2">Closed</span>11:00
                 AM - 12:00 AM
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="sticky top-[56px] flex justify-around border-b-2 bg-background/80 px-2">
+      <div className="bg-background/80 sticky top-[56px] flex justify-around border-b-2 px-2">
         <Link href={"#home"} scroll={true}>
           <div
             onClick={() => menuClick(1)}
@@ -249,7 +249,7 @@ export default function Page() {
           <div className="mt-10 scroll-mt-32 text-2xl  font-bold " id="reviews">
             리뷰
           </div>
-          <div className="mb-10 mt-6 flex items-center gap-10">
+          <div className="mb-10 mt-6 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-10 ">
             <div>
               <div>Overall rating</div>
               <div className="text-lg">⭐️⭐️⭐️⭐️⭐️</div>
@@ -350,7 +350,7 @@ export default function Page() {
 
 function GoBack() {
   return (
-    <div className="sticky top-0 z-10 block bg-background/80 py-2">
+    <div className="bg-background/80 sticky top-0 z-10 block py-2">
       <Link href="../" className="flex items-center gap-1 px-2">
         <ChevronLeftIcon width={40} className="cursor-pointer" />
         뒤로가기
