@@ -16,7 +16,7 @@ import Map from "./Map";
 export default async function Page({ params }: { params: { id: string } }) {
   const post = await api.post.getPost.query({ id: Number.parseInt(params.id) });
 
-  const p = post.post[0]?.storePost;
+  const p = post.post[0]?.storePost ?? { id: 0, title: "", location: "" };
   const items = await api.item.getAllItems.query({
     id: p.id,
   });

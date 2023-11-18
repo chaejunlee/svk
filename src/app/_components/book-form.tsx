@@ -5,14 +5,8 @@ import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import {
-  type ReactNode,
-  type Dispatch,
-  type SetStateAction,
-  useState,
-} from "react";
+import { type Dispatch, type SetStateAction, useState } from "react";
 import { ko } from "date-fns/locale";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { api } from "@/trpc/react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
@@ -38,7 +32,7 @@ export default function BookForm({ id }: { id: string }) {
           alert("날짜와 시간을 선택해주세요.");
           return;
         }
-        const res = await new Promise((resolve, reject) => {
+        await new Promise((resolve, reject) => {
           const result = window.confirm("예약하시겠습니까?");
           if (result) {
             resolve(result);

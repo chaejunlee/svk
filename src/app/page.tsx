@@ -38,9 +38,9 @@ async function MainPosts() {
   const restaurant = posts.posts.filter(
     (post) => post.storePost.description === itemMap.restaurant,
   );
-  const housing = posts.posts.filter(
-    (post) => post.storePost.description === itemMap.housing,
-  );
+  // const housing = posts.posts.filter(
+  //   (post) => post.storePost.description === itemMap.housing,
+  // );
 
   return (
     <div className="flex flex-col gap-4 py-6 pb-24">
