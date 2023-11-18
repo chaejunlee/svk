@@ -1,6 +1,11 @@
 import { CreatePost } from "@/app/_components/create-post";
 import { getServerAuthSession } from "@/server/auth";
 import { api } from "@/trpc/server";
+import {
+  HomeIcon,
+  MagnifyingGlassIcon,
+  UserIcon,
+} from "@heroicons/react/20/solid";
 
 export default async function Home() {
   const hello = await api.post.hello.query({ text: "from tRPC" });
@@ -24,19 +29,25 @@ function Header() {
 
 function BottomNav() {
   return (
-    <nav className="absolute bottom-0 w-full border-t-2 py-4 ">
-      <ul className="flex flex-row justify-between px-8">
-        <li className="flex flex-col items-center justify-center">
-          <div className="aspect-square w-10 rounded-full bg-gray-300"></div>
-          <span className="text-sm uppercase">Home</span>
+    <nav className="absolute bottom-0 w-full border-t-2 pb-3 pt-2">
+      <ul className="flex flex-row justify-between px-10">
+        <li className="flex flex-col items-center justify-center gap-1">
+          <div className="flex aspect-square  content-center justify-center">
+            <HomeIcon className="w-7" />
+          </div>
+          <span className="text-xs uppercase">홈</span>
         </li>
-        <li className="flex flex-col items-center justify-center">
-          <div className="aspect-square w-10 rounded-full bg-gray-300"></div>
-          <span className="text-sm uppercase">Search</span>
+        <li className="flex flex-col items-center justify-center gap-1">
+          <div className="flex aspect-square  content-center justify-center">
+            <MagnifyingGlassIcon className="w-7" />
+          </div>
+          <span className="text-xs uppercase">검색</span>
         </li>
-        <li className="flex flex-col items-center justify-center">
-          <div className="aspect-square w-10 rounded-full bg-gray-300"></div>
-          <span className="text-sm uppercase">My</span>
+        <li className="flex flex-col items-center justify-center gap-1">
+          <div className="flex aspect-square  content-center justify-center">
+            <UserIcon className="w-7" />
+          </div>
+          <span className="text-xs uppercase">마이페이지</span>
         </li>
       </ul>
     </nav>
