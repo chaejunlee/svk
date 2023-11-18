@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
-import { bookingStatus, bookingStatusColor } from "../../book/page";
+import { bookingStats, bookingStatusColor } from "../../book/Book";
 import { Confirm } from "./confirm";
 
 interface IBooking {
@@ -35,7 +35,7 @@ export default function Booking({ props: { storePost, books } }: IBooking) {
           }
           className="absolute left-4 top-4"
         >
-          {bookingStatus[books.status as keyof typeof bookingStatus]}
+          {bookingStats[books.status as keyof typeof bookingStats]}
         </Badge>
         <Image
           className="h-full origin-center overflow-hidden object-cover"
