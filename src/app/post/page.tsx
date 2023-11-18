@@ -9,8 +9,31 @@ import {
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import GoBack from "../_components/goback";
+import {
+  GoogleMap,
+  useJsApiLoader,
+  MarkerF,
+  InfoWindowF,
+} from "@react-google-maps/api";
+
+const place = {
+  name: "Korean Hair Salon",
+  address: "5075 Stevens Creek Blvd, Santa Clara, CA 95051",
+  latitude: 37.32,
+  longitude: -122,
+};
+
+const containerStyle = {
+  width: "100%",
+  height: "24rem",
+};
+
+const center = {
+  lat: 37.32,
+  lng: -122,
+};
 
 export default function Page() {
   const [menu, setMenu] = React.useState(1);
@@ -18,6 +41,14 @@ export default function Page() {
     setMenu(m);
   };
   console.log(menu);
+
+  // MAPS
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: "AIzaSyCKWRyewwCvOEcYPYjxPlFMhmjKPVL9RWI",
+  });
+
+  console.log(isLoaded);
 
   return (
     <>
@@ -194,7 +225,34 @@ export default function Page() {
         <div className="mt-10 scroll-mt-32 text-2xl  font-bold " id="maps">
           지도
         </div>
-        <div className="mt-3 h-96 w-full rounded-lg bg-blue-100"></div>
+        <div className="mt-3 h-96 w-full rounded-lg bg-blue-100">
+          {isLoaded && (
+            <GoogleMap
+              mapContainerStyle={containerStyle}
+              center={center}
+              zoom={12}
+            >
+              <MarkerF
+                position={{ lat: place.latitude, lng: place.longitude }}
+              ></MarkerF>
+              <InfoWindowF
+                position={{ lat: place.latitude, lng: place.longitude }}
+                zIndex={1}
+                options={{
+                  pixelOffset: {
+                    width: 0,
+                    height: -40,
+                  },
+                }}
+              >
+                <div>
+                  <h3>{place.name}</h3>
+                  <p>{place.address}</p>
+                </div>
+              </InfoWindowF>
+            </GoogleMap>
+          )}
+        </div>
         <div className="mb-5 mt-10 scroll-mt-32 text-2xl  font-bold " id="menu">
           메뉴
         </div>
