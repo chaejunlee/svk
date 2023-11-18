@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { bookingStatus, bookingStatusColor } from "../../book/page";
+import { Confirm } from "./confirm";
 
 interface IBooking {
   props: {
@@ -56,15 +57,10 @@ export default function Booking({ props: { storePost, books } }: IBooking) {
           {books.time}
         </div>
         <div>{books.people}명</div>
-        {books.status == "pending" && (
-          <div className="relative flex justify-end gap-2 pt-4">
-            <button className="cursor-pointer rounded-lg border-2 border-blue-300 px-2 py-1 text-blue-400 hover:bg-blue-100">
-              예약 확정
-            </button>
-            <button className=" cursor-pointer rounded-lg border-2 border-red-300 px-2 py-1 text-red-400 hover:bg-red-100">
-              취소
-            </button>
-          </div>
+        {books.status == "pending" ? (
+          <Confirm id={books.id} />
+        ) : (
+          <div className="h-12" />
         )}
       </div>
     </div>
