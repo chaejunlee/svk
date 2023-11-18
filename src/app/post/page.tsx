@@ -1,5 +1,6 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import {
   ChevronLeftIcon,
   ShareIcon,
@@ -32,6 +33,9 @@ export default function Page() {
           />
 
           <div className="absolute bottom-0 flex flex-col gap-2 px-6 py-6 drop-shadow-lg ">
+            <Badge variant="default" className="w-fit">
+              $$$
+            </Badge>
             <div className="text-2xl font-bold">
               롯데 미용실 - Lotte Beauty Salon
             </div>
