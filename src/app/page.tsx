@@ -20,20 +20,20 @@ import Link from "next/link";
 export default async function Home() {
   const session = await getServerAuthSession();
 
-  if (!session?.user) {
-    return (
-      <div className="flex h-[100dvh] flex-col items-center justify-center">
-        <h1 className="text-3xl font-bold">Welcome to SVK Shop</h1>
-        <p className="text-lg">Please log in to continue.</p>
-        <Link
-          href="/api/auth/signin"
-          className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
-        >
-          Sign in
-        </Link>
-      </div>
-    );
-  }
+  // if (!session?.user) {
+  //   return (
+  //     <div className="flex h-[100dvh] flex-col items-center justify-center">
+  //       <h1 className="text-3xl font-bold">Welcome to SVK Shop</h1>
+  //       <p className="text-lg">Please log in to continue.</p>
+  //       <Link
+  //         href="/api/auth/signin"
+  //         className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
+  //       >
+  //         Sign in
+  //       </Link>
+  //     </div>
+  //   );
+  // }
 
   return (
     <>
@@ -61,7 +61,7 @@ function Post() {
       </div>
       <CardHeader className="">
         <CardTitle className="text-lg leading-7">
-          <Link href="/" className="underline">
+          <Link href="/post" className="underline">
             롯데 미용실 - Lotte Beauty Salon
           </Link>
         </CardTitle>
@@ -75,8 +75,8 @@ function Post() {
           이채준
         </Link>
         <div>
-          <span className="text-primary-500">★ 3.5</span>
-          <span className="text-primary-500"> (123)</span>
+          <span className="text-primary">★ 3.5</span>
+          <span className="text-primary"> (123)</span>
         </div>
       </CardContent>
     </Card>
