@@ -17,7 +17,7 @@ export default async function Page() {
   return (
     <main className="relative mx-auto flex min-h-[100svh] max-w-lg flex-col border-2 bg-gray-50">
       <div
-        className="relative h-[500px] w-full object-cover"
+        className="relative h-[500px] w-[500px] object-cover"
         style={{
           background:
             "url('https://www.helpinhearing.co.uk/wp-content/uploads/2019/01/image-placeholder-500x500.jpg')",
@@ -55,9 +55,11 @@ export default async function Page() {
       <div className="flex flex-col px-6">
         <div>미용/네일/카테고리</div>
         <div>closed now</div>
-        <div>
-          <div>
-            <div></div>
+        <div className="flex justify-between px-4">
+          <div className="flex flex-col justify-center">
+            <div className=" flex h-12 w-12 bg-slate-700">
+              <PhoneIcon width={20} />
+            </div>
             <div>Call</div>
           </div>
           <div>Call</div>
