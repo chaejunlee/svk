@@ -9,7 +9,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export function Navigation() {
-  const pathname = usePathname();
+  const pathnames = usePathname().split("/");
+  const pathname = pathnames[1];
+  console.log(pathname);
 
   return (
     <ul className="flex flex-row justify-around">
@@ -17,7 +19,7 @@ export function Navigation() {
         <Link
           href="/"
           className={`flex flex-col items-center justify-center gap-1 ${
-            pathname === "/" ? "text-primary" : "text-gray-400"
+            pathname === "" ? "text-primary" : "text-gray-400"
           }`}
         >
           <div className="flex aspect-square items-center justify-center">
@@ -30,7 +32,7 @@ export function Navigation() {
         <Link
           href="/search"
           className={`flex flex-col items-center justify-center gap-1 ${
-            pathname === "/search" ? "text-primary" : "text-gray-400"
+            pathname === "search" ? "text-primary" : "text-gray-400"
           }`}
         >
           <div className="flex aspect-square  items-center justify-center">
@@ -43,7 +45,7 @@ export function Navigation() {
         <Link
           href="/mypage"
           className={`flex flex-col items-center justify-center gap-1 ${
-            pathname === "/mypage" ? "text-primary" : "text-gray-400"
+            pathname === "mypage" ? "text-primary" : "text-gray-400"
           }`}
         >
           <div className="flex aspect-square  items-center justify-center">

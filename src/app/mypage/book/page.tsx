@@ -2,14 +2,14 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { api } from "@/trpc/server";
 
-const bookingStatus = {
+export const bookingStatus = {
   pending: "승인 대기",
   approved: "승인 완료",
   cancelled: "취소",
   archive: "방문 완료",
 };
 
-const bookingStatusColor = {
+export const bookingStatusColor = {
   pending: "secondary",
   approved: "default",
   cancelled: "destructive",
@@ -43,8 +43,8 @@ function Book({
   const status = bookingStatus[statusKey];
 
   return (
-    <div className="flex min-h-screen w-full overflow-hidden rounded-lg border">
-      <div className="relative">
+    <div className="flex w-full overflow-hidden rounded-lg border">
+      <div className="relative w-[33%]">
         <Badge
           variant={bookingStatusColor[statusKey]}
           className="absolute left-4 top-4"
@@ -52,7 +52,7 @@ function Book({
           {status}
         </Badge>
         <Image
-          className="h-48 w-full origin-center overflow-hidden object-cover"
+          className="h-full grow origin-center overflow-hidden object-cover"
           src={`https://picsum.photos/id/44${props.books.postId}/400/400`}
           width="400"
           height="400"
@@ -60,13 +60,20 @@ function Book({
         />
       </div>
 
-      <div className="flex flex-col gap-1 bg-gray-50 p-4">
-        <h4 className="text-lg font-semibold">
-          롯데 미용실 - Lotte Beauty Salon
-        </h4>
-        <p className="text-sm text-gray-400">1860 Fillmore St, San Francisco</p>
-        <p className="text-sm">2021년 10월 10일 10:00</p>
-        <p className="text-sm">1명</p>
+      <div className="flex w-[67%] flex-col gap-1 bg-gray-50 p-4">
+        <h4 className="truncate text-lg font-bold">{props.storePost.title}</h4>
+        <p className="truncate text-sm text-gray-400">
+          {props.storePost.location}
+        </p>
+        <p className="text-sm">
+          {props.books.date.toLocaleDateString("ko", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}{" "}
+          {props.books.time}
+        </p>
+        <p className="text-sm">{props.books.people}명</p>
       </div>
     </div>
   );
@@ -76,7 +83,7 @@ export default async function Page() {
   const books = await api.book.getBooks.query();
 
   return (
-    <section className="py-6">
+    <section className="min-h-screen py-6">
       <h3 className="px-6 py-6 text-xl font-semibold">예약 현황</h3>
       <div className="flex flex-col gap-4 px-6">
         {books.map((book) => {
