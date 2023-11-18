@@ -5,11 +5,26 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "@/server/api/trpc";
+import { books, storePost } from "@/server/db/schema";
+import { eq } from "drizzle-orm";
 
 export const bookRouter = createTRPCRouter({
+  getBooks: publicProcedure.input(z.undefined()).query(async ({ ctx }) => {
+    if (!ctx.session) {
+      throw new Error("You must be logged in to view your bookings");
+    }
+    const bookings = await ctx.db
+      .select()
+      .from(books)
+      .leftJoin(storePost, eq(books.postId, storePost.id))
+      .where(eq(books.customer, ctx.session.user.id));
+
+    return bookings;
+  }),
   mutate: protectedProcedure
     .input(
       z.object({
+        postId: z.number(),
         date: z.date(),
         time: z.string(),
         people: z.number(),
@@ -19,7 +34,14 @@ export const bookRouter = createTRPCRouter({
       if (!ctx.session.user) {
         throw new Error("You must be logged in to book a table");
       }
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await ctx.db.insert(books).values({
+        date: input.date,
+        time: input.time,
+        people: input.people,
+        customer: ctx.session.user.id,
+        postId: input.postId,
+        status: "pending",
+      });
       return {
         status: "ok",
         ...input,

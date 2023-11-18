@@ -5,7 +5,7 @@ export default function Page({ params }: { params: { id: string } }) {
   return (
     <>
       <GoBack />
-      <BookForm />
+      <BookForm id={params.id} />
     </>
   );
 }

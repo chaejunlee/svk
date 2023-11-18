@@ -17,27 +17,14 @@ import { api } from "@/trpc/react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 
-export default function BookForm() {
+export default function BookForm({ id }: { id: string }) {
   const router = useRouter();
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [time, setTime] = useState<string | undefined>(undefined);
   const [people, setPeople] = useState<number>(1);
 
   const { isLoading, mutate } = api.book.mutate.useMutation({
-    onSuccess: async () => {
-      const res = await new Promise((resolve, reject) => {
-        const result = window.confirm(
-          "예약이 완료되었습니다. 예약 내역을 확인하시겠습니까?",
-        );
-        if (result) {
-          resolve(result);
-        } else {
-          router.push("/");
-          reject(null);
-        }
-      });
-      if (!res) {
-      }
+    onSuccess: () => {
       router.push("/mypage/book");
     },
   });
@@ -45,10 +32,22 @@ export default function BookForm() {
   return (
     <form
       className="py-4"
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
-        if (!date || !time) return;
+        if (!date || !time) {
+          alert("날짜와 시간을 선택해주세요.");
+          return;
+        }
+        const res = await new Promise((resolve, reject) => {
+          const result = window.confirm("예약하시겠습니까?");
+          if (result) {
+            resolve(result);
+          } else {
+            reject(null);
+          }
+        });
         mutate({
+          postId: Number.parseInt(id),
           date: date,
           time: time,
           people: people,
@@ -172,24 +171,5 @@ function TimePicker({
         </RadioGroup>
       </div>
     </>
-  );
-}
-
-function Booking({ children }: { children: ReactNode }) {
-  return (
-    <div className="flex px-2">
-      <Dialog>
-        <DialogTrigger className="flex w-full items-center justify-center rounded-lg bg-primary py-4 font-semibold text-white no-underline transition hover:bg-primary/80">
-          예약하기
-        </DialogTrigger>
-        <DialogContent>
-          <div className="flex flex-col gap-2 p-4">
-            <h3 className="text-xl font-semibold">예약하기</h3>
-            <p>아래 예약 정보를 확인해주세요</p>
-          </div>
-          {children}
-        </DialogContent>
-      </Dialog>
-    </div>
   );
 }
