@@ -83,7 +83,7 @@ function Post() {
 
 function MainPosts() {
   return (
-    <div className="flex flex-col gap-4 py-6">
+    <div className="flex flex-col gap-4 py-6 pb-24">
       <h3 className="px-4 text-2xl font-bold" id="#aesthetic">
         미용
       </h3>
