@@ -10,28 +10,22 @@ import { eq } from "drizzle-orm";
 
 export const bookRouter = createTRPCRouter({
   getBooks: publicProcedure.input(z.undefined()).query(async ({ ctx }) => {
-    if (!ctx.session) {
-      throw new Error("You must be logged in to view your bookings");
-    }
     const bookings = await ctx.db
       .select()
       .from(books)
       .leftJoin(storePost, eq(books.postId, storePost.id))
-      .where(eq(books.customer, ctx.session.user.id));
+      .where(eq(books.customer, ctx.session!.user.id));
 
     return bookings;
   }),
   manageBooks: protectedProcedure
     .input(z.undefined())
     .query(async ({ ctx }) => {
-      if (!ctx.session) {
-        throw new Error("You must be logged in to view your bookings");
-      }
       const bookings = await ctx.db
         .select()
         .from(books)
         .leftJoin(storePost, eq(books.postId, storePost.id))
-        .where(eq(storePost.owner, ctx.session.user.id));
+        .where(eq(storePost.owner, ctx.session!.user.id));
 
       return bookings;
     }),

@@ -1,9 +1,17 @@
 import { api } from "@/trpc/server";
-import Booking from "./components/booking";
+import Booking from "./_components/booking";
 
-export default async function Page() {
+export default function Page() {
+  return (
+    <>
+      <ManageBooking />
+    </>
+  );
+}
+
+async function ManageBooking() {
   const books = await api.book.manageBooks.query();
-  console.log(books);
+
   return (
     <section className="flex min-h-screen flex-col">
       <h3 className="px-6 py-6 text-xl font-semibold">예약 관리</h3>

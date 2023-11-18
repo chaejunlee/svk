@@ -1,7 +1,15 @@
 import { api } from "@/trpc/server";
 import { Book } from "./Book";
 
-export default async function Page() {
+export default function Page() {
+  return (
+    <>
+      <MyBooking />
+    </>
+  );
+}
+
+async function MyBooking() {
   const books = await api.book.getBooks.query();
 
   return (

@@ -9,7 +9,6 @@ import Link from "next/link";
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-sans",
 });
 
 export const metadata = {
@@ -33,7 +32,7 @@ export default async function RootLayout({
           content="width=device-width, initial-scale=1, maximum-scale=1"
         />
       </head>
-      <body className={`font-sans ${inter.variable}`}>
+      <body className={`font-sans`}>
         <TRPCReactProvider cookies={cookies().toString()}>
           <main className="relative mx-auto flex h-[100dvh] w-full min-w-[300px] max-w-lg flex-col overflow-scroll bg-background outline outline-2 outline-gray-200">
             {session?.user ? children : <Login />}
