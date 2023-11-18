@@ -1,4 +1,6 @@
+import { Badge } from "@/components/ui/badge";
 import type { ReactNode } from "react";
+import Image from "next/image";
 
 interface IBooking {
   status: "pending" | "approved" | "cancelled" | "history";
@@ -7,35 +9,48 @@ interface IBooking {
 export default function Booking({ status, children }: IBooking) {
   console.log(status);
   return (
-    <div className="border-b-2 p-3">
-      <span
-        style={{
-          color:
+    <div className="relative flex w-full overflow-hidden rounded-lg border">
+      <div>
+        <Badge
+          variant={
             status == "approved"
-              ? "green"
+              ? "default"
               : status == "pending"
-                ? "blue"
+                ? "secondary"
                 : status == "cancelled"
-                  ? "red"
-                  : "black",
-        }}
-      >
-        {status == "approved"
-          ? "예약 확정이 되었습니다."
-          : status == "pending"
-            ? "예약이 확정 필요합니다"
-            : status == "cancelled"
-              ? "예약이 취소 되었습니다."
-              : "이용이 완료 되었습니다."}
-      </span>
-      <div className="flex">
-        {children}
-        {status == "pending" && (
-          <button className="absolute right-4 cursor-pointer rounded-lg border-2 border-blue-300 px-2 py-1 text-blue-300 hover:bg-blue-100">
+                  ? "destructive"
+                  : "outline"
+          }
+          className="absolute left-4 top-4"
+        >
+          {status == "approved"
+            ? "승인 완료"
+            : status == "pending"
+              ? "승인 대기"
+              : status == "cancelled"
+                ? "취소"
+                : "방문 완료"}
+        </Badge>
+        <Image
+          className="h-48 w-full origin-center overflow-hidden object-cover"
+          src="https://placehold.co/400/png"
+          width="400"
+          height="400"
+          alt=""
+        />
+      </div>
+
+      {children}
+      {status == "pending" && (
+        <div className="absolute bottom-2 right-2 flex gap-2">
+          <button className=" cursor-pointer rounded-lg border-2 border-blue-300 px-2 py-1 text-blue-400 hover:bg-blue-100">
             예약 확정
           </button>
-        )}
-      </div>
+          <button className=" cursor-pointer rounded-lg border-2 border-red-300 px-2 py-1 text-red-400 hover:bg-red-100">
+            취소
+          </button>
+        </div>
+      )}
     </div>
   );
 }
