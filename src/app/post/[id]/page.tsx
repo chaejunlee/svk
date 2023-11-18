@@ -11,6 +11,7 @@ import { Tabs } from "./Tabs";
 import { api } from "@/trpc/server";
 import { BottomNav } from "@/app/_components/bottom-nav";
 import Booking from "@/app/_components/bookingBtn";
+import Map from "./Map";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const post = await api.post.getPost.query({ id: Number.parseInt(params.id) });
@@ -109,7 +110,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         <div className="mt-10 scroll-mt-32 text-2xl  font-bold " id="maps">
           지도
         </div>
-        <div className="mt-3 h-96 w-full rounded-lg bg-blue-100"></div>
+        <Map />
         <div className="mb-5 mt-10 scroll-mt-32 text-2xl  font-bold " id="menu">
           메뉴
         </div>
