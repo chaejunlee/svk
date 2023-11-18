@@ -2,7 +2,6 @@
 
 import { Badge } from "@/components/ui/badge";
 import {
-  ChevronLeftIcon,
   ShareIcon,
   PhoneIcon,
   GlobeAsiaAustraliaIcon,
@@ -11,6 +10,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import GoBack from "../_components/goback";
 
 export default function Page() {
   const [menu, setMenu] = React.useState(1);
@@ -43,14 +43,14 @@ export default function Page() {
               <span className="text-primary">★ 3.5 (123)</span>
               <span>미용/네일/카테고리</span>
               <div className="flex gap-2">
-                <span className="text-destructive flex gap-2">Closed</span>11:00
+                <span className="flex gap-2 text-destructive">Closed</span>11:00
                 AM - 12:00 AM
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="bg-background/80 sticky top-[56px] flex justify-around border-b-2 px-2">
+      <div className="sticky top-[56px] flex justify-around border-b-2 bg-background/80 px-2">
         <Link href={"#home"} scroll={true}>
           <div
             onClick={() => menuClick(1)}
@@ -345,16 +345,5 @@ export default function Page() {
         </div>
       </div>
     </>
-  );
-}
-
-function GoBack() {
-  return (
-    <div className="bg-background/80 sticky top-0 z-10 block py-2">
-      <Link href="../" className="flex items-center gap-1 px-2">
-        <ChevronLeftIcon width={40} className="cursor-pointer" />
-        뒤로가기
-      </Link>
-    </div>
   );
 }
