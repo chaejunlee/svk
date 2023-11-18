@@ -9,7 +9,6 @@ export default async function Home() {
   return (
     <main className="relative mx-auto flex min-h-[100svh] max-w-lg flex-col border-2 bg-gray-50">
       <Header />
-      <div className="-my-5">asdfasdfads</div>
       <BottomNav />
     </main>
   );
