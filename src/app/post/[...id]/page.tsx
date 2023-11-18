@@ -118,7 +118,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         <div className="mt-10 scroll-mt-32 text-2xl  font-bold " id="maps">
           지도
         </div>
-        <Map />
+        <Map name={p?.title} address={p?.location} />
         <div className="mb-5 mt-10 scroll-mt-32 text-2xl  font-bold " id="menu">
           메뉴
         </div>

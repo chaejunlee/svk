@@ -23,7 +23,12 @@ const center = {
   lng: -122,
 };
 
-export default function Map() {
+interface IMap {
+  name: string | null | undefined;
+  address: string | null | undefined;
+}
+
+export default function Map({ name, address }: IMap) {
   // MAPS
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -47,8 +52,8 @@ export default function Map() {
           }}
         >
           <div>
-            <h3>{place.name}</h3>
-            <p>{place.address}</p>
+            <h3>{name}</h3>
+            <p>{address}</p>
           </div>
         </InfoWindowF>
       </GoogleMap>
