@@ -4,6 +4,8 @@ import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
 
 import { TRPCReactProvider } from "@/trpc/react";
+import { getServerAuthSession } from "@/server/auth";
+import { Link } from "lucide-react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -16,11 +18,13 @@ export const metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerAuthSession();
+
   return (
     <html lang="en" style={{ scrollBehavior: "smooth" }}>
       <head>
@@ -31,11 +35,26 @@ export default function RootLayout({
       </head>
       <body className={`font-sans ${inter.variable}`}>
         <TRPCReactProvider cookies={cookies().toString()}>
-          <main className="bg-background relative mx-auto flex h-[100dvh] w-full min-w-[300px] max-w-lg flex-col overflow-scroll outline outline-2 outline-gray-200">
-            {children}
+          <main className="relative mx-auto flex h-[100dvh] w-full min-w-[300px] max-w-lg flex-col overflow-scroll bg-background outline outline-2 outline-gray-200">
+            {session?.user ? children : <Login />}
           </main>
         </TRPCReactProvider>
       </body>
     </html>
+  );
+}
+
+function Login() {
+  return (
+    <div className="flex h-[100dvh] flex-col items-center justify-center">
+      <h1 className="text-3xl font-bold">Welcome to SVK Shop</h1>
+      <p className="text-lg">Please log in to continue.</p>
+      <Link
+        href="/api/auth/signin"
+        className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
+      >
+        Sign in
+      </Link>
+    </div>
   );
 }

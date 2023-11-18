@@ -14,24 +14,7 @@ import Link from "next/link";
 import { Navigation } from "./_components/navigation";
 import { BottomNav } from "./_components/bottom-nav";
 
-export default async function Home() {
-  const session = await getServerAuthSession();
-
-  // if (!session?.user) {
-  //   return (
-  //     <div className="flex h-[100dvh] flex-col items-center justify-center">
-  //       <h1 className="text-3xl font-bold">Welcome to SVK Shop</h1>
-  //       <p className="text-lg">Please log in to continue.</p>
-  //       <Link
-  //         href="/api/auth/signin"
-  //         className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
-  //       >
-  //         Sign in
-  //       </Link>
-  //     </div>
-  //   );
-  // }
-
+export default function Home() {
   return (
     <>
       <MainPosts />
