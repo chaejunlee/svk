@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 
 import { TRPCReactProvider } from "@/trpc/react";
 import { getServerAuthSession } from "@/server/auth";
-import { Link } from "lucide-react";
+import Link from "next/link";
 
 const inter = Inter({
   subsets: ["latin"],
