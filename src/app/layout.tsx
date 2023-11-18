@@ -22,10 +22,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" style={{ scrollBehavior: "smooth" }}>
       <body className={`font-sans ${inter.variable}`}>
         <TRPCReactProvider cookies={cookies().toString()}>
-          <main className="bg-background relative mx-auto flex h-[100dvh] max-w-lg flex-col overflow-scroll border-2">
+          <main className="relative mx-auto flex h-[100dvh] max-w-lg flex-col overflow-scroll border-2 bg-background">
             {children}
           </main>
         </TRPCReactProvider>
