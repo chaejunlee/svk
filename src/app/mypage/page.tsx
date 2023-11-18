@@ -27,7 +27,7 @@ export default function Page() {
       <header className="grid w-full place-content-center py-4 text-xl font-bold">
         프로필
       </header>
-      <main className="min-h-screen p-8">
+      <main className="h-[100dvh] overflow-scroll p-8 pb-16">
         <Profile />
         <h3 className="my-4 text-lg font-bold">예약</h3>
         <div className="flex flex-col gap-3">
@@ -37,10 +37,10 @@ export default function Page() {
           <Link className="text-xl hover:text-gray-500" href={"mypage/manage"}>
             예약 관리
           </Link>
+          <Link className="text-xl text-destructive" href="/api/auth/signout">
+            로그아웃
+          </Link>
         </div>
-        <Link className="text-xl " href="/api/auth/signout">
-          로그아웃
-        </Link>
       </main>
     </>
   );
