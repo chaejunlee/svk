@@ -9,7 +9,7 @@ import {
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React from "react";
 import GoBack from "../_components/goback";
 import {
   GoogleMap,
@@ -28,6 +28,7 @@ const place = {
 const containerStyle = {
   width: "100%",
   height: "24rem",
+  borderRadius: "20px",
 };
 
 const center = {
@@ -40,15 +41,25 @@ export default function Page() {
   const menuClick = (m: number) => {
     setMenu(m);
   };
-  console.log(menu);
+
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    // first prevent the default behavior
+    e.preventDefault();
+    // get the href and remove everything before the hash (#)
+    const href = e.currentTarget.href;
+    const targetId = href.replace(/.*\#/, "");
+    // get the element by id and use scrollIntoView
+    const elem = document.getElementById(targetId);
+    elem?.scrollIntoView({
+      behavior: "smooth",
+    });
+  };
 
   // MAPS
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: "AIzaSyCKWRyewwCvOEcYPYjxPlFMhmjKPVL9RWI",
   });
-
-  console.log(isLoaded);
 
   return (
     <>
@@ -81,8 +92,8 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <div className="sticky top-[56px] flex justify-around border-b-2 bg-background/80 px-2">
-        <Link href={"#home"} scroll={true}>
+      <div className="sticky top-[56px] z-10 flex justify-around border-b-2 bg-background/80 px-2">
+        <Link href={"#home"} onClick={handleScroll}>
           <div
             onClick={() => menuClick(1)}
             className="flex h-12 w-12 cursor-pointer items-center justify-center text-gray-400"
@@ -99,7 +110,7 @@ export default function Page() {
             <motion.div layoutId="menu" className="h-[2px] w-12 bg-black" />
           )}
         </Link>
-        <Link href={"#hours"} scroll={true}>
+        <Link href={"#hours"} onClick={handleScroll}>
           <div
             onClick={() => menuClick(2)}
             className="flex h-12 w-12 cursor-pointer items-center justify-center text-gray-400"
@@ -116,7 +127,7 @@ export default function Page() {
             <motion.div layoutId="menu" className="h-[2px] w-12 bg-black" />
           )}
         </Link>
-        <Link href={"#maps"} scroll={true}>
+        <Link href={"#maps"} onClick={handleScroll}>
           <div
             onClick={() => menuClick(3)}
             className="flex h-12 w-12 cursor-pointer items-center justify-center text-gray-400"
@@ -133,7 +144,7 @@ export default function Page() {
             <motion.div layoutId="menu" className="h-[2px] w-12 bg-black" />
           )}
         </Link>
-        <Link href={"#menu"} scroll={true}>
+        <Link href={"#menu"} onClick={handleScroll}>
           <div
             onClick={() => menuClick(4)}
             className="flex h-12 w-12 cursor-pointer items-center justify-center text-gray-400"
@@ -150,7 +161,7 @@ export default function Page() {
             <motion.div layoutId="menu" className="h-[2px] w-12 bg-black" />
           )}
         </Link>
-        <Link href={"#reviews"} scroll={true}>
+        <Link href={"#reviews"} onClick={handleScroll}>
           <div
             onClick={() => menuClick(5)}
             className="flex h-12 w-12 cursor-pointer items-center justify-center text-gray-400"
