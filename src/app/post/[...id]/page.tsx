@@ -15,9 +15,17 @@ import Map from "./Map";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const post = await api.post.getPost.query({ id: Number.parseInt(params.id) });
+
+  const p = post.post[0]?.storePost;
+  const items =
+    p &&
+    (await api.item.getAllItems.query({
+      id: p.id,
+    }));
   const rating = Math.round(Math.random() * 5 * 10) / 10;
   const reviews = Math.round(Math.random() * 1000);
 
+  console.log(p?.id, items?.i);
   return (
     <>
       <GoBack />
@@ -114,51 +122,31 @@ export default async function Page({ params }: { params: { id: string } }) {
         <div className="mb-5 mt-10 scroll-mt-32 text-2xl  font-bold " id="menu">
           메뉴
         </div>
+
         <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-5">
-            <div className="h-24 w-24  rounded-lg bg-blue-100"></div>
-            <div className="flex w-60 flex-col gap-1">
-              <span className="text-lg">커트</span>
-              <span className="break text-sm">
-                설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명
-                설명 설명 설명 설명
-              </span>
-              <span className=" text-base font-bold">$30.00</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-5">
-            <div className="h-24 w-24  rounded-lg bg-blue-100"></div>
-            <div className="flex w-60 flex-col gap-1">
-              <span className="text-lg">커트</span>
-              <span className="break text-sm">
-                설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명
-                설명 설명 설명 설명
-              </span>
-              <span className=" text-base font-bold">$30.00</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-5">
-            <div className="h-24 w-24  rounded-lg bg-blue-100"></div>
-            <div className="flex w-60 flex-col gap-1">
-              <span className="text-lg">커트</span>
-              <span className="break text-sm">
-                설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명
-                설명 설명 설명 설명
-              </span>
-              <span className=" text-base font-bold">$30.00</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-5">
-            <div className="h-24 w-24  rounded-lg bg-blue-100"></div>
-            <div className="flex w-60 flex-col gap-1">
-              <span className="text-lg">커트</span>
-              <span className="break text-sm">
-                설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명
-                설명 설명 설명 설명
-              </span>
-              <span className=" text-base font-bold">$30.00</span>
-            </div>
-          </div>
+          {items
+            ? items.i.map((item, key) => (
+                <div className="flex items-center gap-5" key={key}>
+                  <Image
+                    src={item.items.url!}
+                    alt={"item"}
+                    className="h-24 w-24  rounded-lg bg-blue-100"
+                    width={20}
+                    height={20}
+                  />
+                  {/* <div className="h-24 w-24  rounded-lg bg-blue-100"></div> */}
+                  <div className="flex w-60 flex-col gap-1">
+                    <span className="text-lg">{item.items.item}</span>
+                    <span className="break text-sm">
+                      {item.items.description}
+                    </span>
+                    <span className=" text-base font-bold">
+                      ${item.items.price}
+                    </span>
+                  </div>
+                </div>
+              ))
+            : ""}
         </div>
 
         <div>
