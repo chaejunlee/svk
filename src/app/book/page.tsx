@@ -1,6 +1,5 @@
 import { ChevronLeftIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
-import { BottomNav } from "../page";
 
 import BookForm from "../_components/book-form";
 
@@ -8,7 +7,6 @@ export default function Page() {
   return (
     <>
       <GoBack />
-
       <BookForm />
     </>
   );

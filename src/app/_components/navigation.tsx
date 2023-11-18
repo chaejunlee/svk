@@ -5,6 +5,7 @@ import {
   MagnifyingGlassIcon,
   UserIcon,
 } from "@heroicons/react/20/solid";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export function Navigation() {
@@ -22,7 +23,9 @@ export function Navigation() {
         <div className="flex aspect-square items-center justify-center">
           <HomeIcon className="w-7" />
         </div>
-        <span className="text-xs uppercase">홈</span>
+        <Link href="/" className="text-xs uppercase">
+          홈
+        </Link>
       </li>
       <li
         className={`flex flex-col items-center justify-center gap-1 ${
@@ -32,7 +35,9 @@ export function Navigation() {
         <div className="flex aspect-square  items-center justify-center">
           <MagnifyingGlassIcon className="w-7" />
         </div>
-        <span className="text-xs uppercase">검색</span>
+        <Link href="/search" className="text-xs uppercase">
+          검색
+        </Link>
       </li>
       <li
         className={`flex flex-col items-center justify-center gap-1 ${
@@ -42,7 +47,9 @@ export function Navigation() {
         <div className="flex aspect-square  items-center justify-center">
           <UserIcon className="w-7" />
         </div>
-        <span className="text-xs uppercase">마이페이지</span>
+        <Link href="/mypage" className="text-xs uppercase">
+          마이페이지
+        </Link>
       </li>
     </ul>
   );

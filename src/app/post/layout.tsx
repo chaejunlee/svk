@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BottomNav } from "../page";
+import { BottomNav } from "../_components/bottom-nav";
 
 export default function RootLayout({
   children,

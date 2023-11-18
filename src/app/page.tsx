@@ -11,8 +11,8 @@ import { getServerAuthSession } from "@/server/auth";
 import { api } from "@/trpc/server";
 import Image from "next/image";
 import Link from "next/link";
-import { ReactNode } from "react";
-import { Navigation } from "./Navigation";
+import { Navigation } from "./_components/navigation";
+import { BottomNav } from "./_components/bottom-nav";
 
 export default async function Home() {
   const session = await getServerAuthSession();
@@ -95,14 +95,6 @@ function MainPosts() {
         <Post />
       </div>
     </div>
-  );
-}
-
-export function BottomNav({ children }: { children?: ReactNode }) {
-  return (
-    <nav className="bg-background text-primary sticky bottom-0 w-full border-t-2 pb-3 pt-2">
-      {children}
-    </nav>
   );
 }
 

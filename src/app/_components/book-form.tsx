@@ -31,7 +31,7 @@ export default function BookForm() {
           reject();
         }
       });
-      router.push("/");
+      router.push("/mypage");
     },
   });
 
