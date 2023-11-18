@@ -1,6 +1,5 @@
 import "@/styles/globals.css";
 
-import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
 
 import { TRPCReactProvider } from "@/trpc/react";
@@ -19,7 +18,11 @@ export const dynamic = "force-dynamic";
 async function CheckSession({ children }: { children: React.ReactNode }) {
   const session = await getServerAuthSession();
 
-  return <>{session?.user ? children : <Login />}</>;
+  if (session?.user) {
+    return <>{children}</>;
+  }
+
+  return <Login />;
 }
 
 export default function RootLayout({
@@ -28,21 +31,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" style={{ scrollBehavior: "smooth" }}>
-      <head>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1"
-        />
-      </head>
-      <body className={`font-sans`}>
-        <Suspense fallback={<div>Loading...</div>}>
-          <TRPCReactProvider cookies={cookies().toString()}>
-            <main className="relative mx-auto flex h-[100dvh] w-full min-w-[300px] max-w-lg flex-col overflow-scroll bg-background outline outline-2 outline-gray-200">
+    <html lang="en">
+      <body>
+        <TRPCReactProvider cookies={cookies().toString()}>
+          <main className="relative mx-auto flex h-[100dvh] w-full min-w-[300px] max-w-lg flex-col overflow-scroll bg-background outline outline-2 outline-gray-200">
+            <Suspense fallback="loading...">
               <CheckSession>{children}</CheckSession>
-            </main>
-          </TRPCReactProvider>
-        </Suspense>
+            </Suspense>
+          </main>
+        </TRPCReactProvider>
       </body>
     </html>
   );
