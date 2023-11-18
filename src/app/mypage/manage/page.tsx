@@ -2,7 +2,7 @@ import Booking from "./components/booking";
 
 export default function Page() {
   return (
-    <main className="flex flex-col">
+    <section className="flex flex-col">
       <h3 className="px-6 py-6 text-xl font-semibold">예약 관리</h3>
       <div className="flex flex-col gap-4 px-6">
         <Booking status="pending">
@@ -41,6 +41,6 @@ export default function Page() {
           </div>
         </Booking>
       </div>
-    </main>
+    </section>
   );
 }

@@ -1,6 +1,7 @@
 import { relations, sql } from "drizzle-orm";
 import {
   bigint,
+  float,
   index,
   int,
   mysqlTableCreator,
@@ -33,7 +34,7 @@ export const posts = mysqlTable(
   (example) => ({
     createdByIdIdx: index("createdById_idx").on(example.createdById),
     nameIndex: index("name_idx").on(example.name),
-  })
+  }),
 );
 
 export const users = mysqlTable("user", {
@@ -71,7 +72,7 @@ export const accounts = mysqlTable(
   (account) => ({
     compoundKey: primaryKey(account.provider, account.providerAccountId),
     userIdIdx: index("userId_idx").on(account.userId),
-  })
+  }),
 );
 
 export const accountsRelations = relations(accounts, ({ one }) => ({
@@ -89,7 +90,7 @@ export const sessions = mysqlTable(
   },
   (session) => ({
     userIdIdx: index("userId_idx").on(session.userId),
-  })
+  }),
 );
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
@@ -105,5 +106,42 @@ export const verificationTokens = mysqlTable(
   },
   (vt) => ({
     compoundKey: primaryKey(vt.identifier, vt.token),
-  })
+  }),
 );
+
+export const storePost = mysqlTable("storePost", {
+  id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+  title: varchar("title", { length: 255 }),
+  owner: varchar("owner_id", { length: 255 }),
+  location: varchar("location", { length: 255 }),
+  price: varchar("price", { length: 10 }),
+  description: varchar("description", { length: 255 }),
+});
+
+export const storePostRelations = relations(storePost, ({ one }) => ({
+  user: one(users, { fields: [storePost.owner], references: [users.id] }),
+}));
+
+export const items = mysqlTable("items", {
+  id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+  postId: bigint("post_id", { mode: "number" }),
+  item: varchar("item", { length: 255 }),
+  price: float("price"),
+  description: varchar("description", { length: 255 }),
+  url: varchar("image", { length: 255 }),
+});
+
+export const books = mysqlTable("books", {
+  id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+  postId: bigint("post_id", { mode: "number" }),
+  customer: varchar("customer", { length: 255 }),
+  date: timestamp("date", { mode: "date" }).notNull(),
+  time: varchar("time", { length: 255 }),
+  people: int("people"),
+  status: varchar("status", { length: 255 }),
+});
+
+export const booksRelations = relations(books, ({ one }) => ({
+  post: one(storePost, { fields: [books.postId], references: [storePost.id] }),
+  user: one(users, { fields: [books.customer], references: [users.id] }),
+}));

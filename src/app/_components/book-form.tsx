@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import type { ReactNode, Dispatch, SetStateAction } from "react";
-import { useState } from "react";
 import { ko } from "date-fns/locale";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { api } from "@/trpc/react";
@@ -15,9 +14,6 @@ import { Loader2 } from "lucide-react";
 
 export default function BookForm() {
   const router = useRouter();
-  const [time, setTime] = useState<string | undefined>(undefined);
-  const [date, setDate] = useState<Date | undefined>(new Date());
-  const [people, setPeople] = useState<number>(1);
 
   const { isLoading, mutate } = api.book.mutate.useMutation({
     onSuccess: async () => {
@@ -172,7 +168,7 @@ function Booking({ children }: { children: ReactNode }) {
   return (
     <div className="flex px-2">
       <Dialog>
-        <DialogTrigger className="bg-primary hover:bg-primary/80 flex w-full items-center justify-center rounded-lg py-4 font-semibold text-white no-underline transition">
+        <DialogTrigger className="flex w-full items-center justify-center rounded-lg bg-primary py-4 font-semibold text-white no-underline transition hover:bg-primary/80">
           예약하기
         </DialogTrigger>
         <DialogContent>

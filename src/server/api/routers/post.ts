@@ -5,14 +5,33 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "@/server/api/trpc";
-import { posts } from "@/server/db/schema";
+import { posts, storePost, users } from "@/server/db/schema";
+import { eq } from "drizzle-orm";
 
 export const postRouter = createTRPCRouter({
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
+  getAllPosts: protectedProcedure
+    .input(z.undefined())
+    .query(async ({ input, ctx }) => {
+      const posts = await ctx.db
+        .select()
+        .from(storePost)
+        .leftJoin(users, eq(users.id, storePost.owner));
+
       return {
-        greeting: `Hello ${input.text}`,
+        posts,
+      };
+    }),
+  getPost: protectedProcedure
+    .input(z.object({ id: z.number().min(1) }))
+    .query(async ({ input, ctx }) => {
+      const post = await ctx.db
+        .select()
+        .from(storePost)
+        .leftJoin(users, eq(users.id, storePost.owner))
+        .where(eq(storePost.id, input.id));
+
+      return {
+        post,
       };
     }),
 

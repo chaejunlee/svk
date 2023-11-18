@@ -1,23 +1,19 @@
-"use client";
-
 import { Badge } from "@/components/ui/badge";
 import {
   ShareIcon,
   PhoneIcon,
   GlobeAsiaAustraliaIcon,
 } from "@heroicons/react/20/solid";
-import { motion } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
-import GoBack from "../_components/goback";
+import GoBack from "../../_components/goback";
+import { Tabs } from "./Tabs";
+import { api } from "@/trpc/server";
 
-export default function Page() {
-  const [menu, setMenu] = React.useState(1);
-  const menuClick = (m: number) => {
-    setMenu(m);
-  };
-  console.log(menu);
+export default async function Page({ params }: { params: { id: string } }) {
+  const post = await api.post.getPost.query({ id: Number.parseInt(params.id) });
+  const rating = Math.round(Math.random() * 5 * 10) / 10;
+  const reviews = Math.round(Math.random() * 1000);
 
   return (
     <>
@@ -25,23 +21,25 @@ export default function Page() {
       <div className="relative">
         <div className="relative h-[40vh] min-h-[300px]">
           <Image
-            className="absolute top-0 h-[40vh] min-h-[300px] w-full overflow-hidden object-cover"
-            src="https://placehold.co/500/png"
+            className="absolute top-0 -z-0 h-[40vh] min-h-[300px] w-full overflow-hidden object-cover"
+            src={`https://picsum.photos/id/44${params.id}/400/400`}
             alt="test"
             width="500"
             height="500"
           />
 
-          <div className="absolute bottom-0 flex flex-col gap-2 px-6 py-6 drop-shadow-lg ">
+          <div className="absolute bottom-0 flex w-full flex-col gap-2 bg-gradient-to-t from-gray-50/80 via-gray-50/50 to-transparent px-6 py-6 drop-shadow-lg">
             <Badge variant="default" className="w-fit">
-              $$$
+              {post.post[0]?.storePost.price}
             </Badge>
             <div className="text-2xl font-bold">
-              롯데 미용실 - Lotte Beauty Salon
+              {post.post[0]?.storePost.title}
             </div>
             <div className="flex flex-col">
-              <span className="text-primary">★ 3.5 (123)</span>
-              <span>미용/네일/카테고리</span>
+              <span className="text-primary">
+                ★ {rating} ({reviews})
+              </span>
+              <span>{post.post[0]?.storePost.description}</span>
               <div className="flex gap-2">
                 <span className="flex gap-2 text-destructive">Closed</span>11:00
                 AM - 12:00 AM
@@ -50,93 +48,8 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <div className="sticky top-[56px] flex justify-around border-b-2 bg-background/80 px-2">
-        <Link href={"#home"} scroll={true}>
-          <div
-            onClick={() => menuClick(1)}
-            className="flex h-12 w-12 cursor-pointer items-center justify-center text-gray-400"
-            style={{
-              color:
-                menu == 1
-                  ? "black"
-                  : "rgb(156 163 175 / var(--tw-text-opacity))",
-            }}
-          >
-            홈
-          </div>
-          {menu == 1 && (
-            <motion.div layoutId="menu" className="h-[2px] w-12 bg-black" />
-          )}
-        </Link>
-        <Link href={"#hours"} scroll={true}>
-          <div
-            onClick={() => menuClick(2)}
-            className="flex h-12 w-12 cursor-pointer items-center justify-center text-gray-400"
-            style={{
-              color:
-                menu == 2
-                  ? "black"
-                  : "rgb(156 163 175 / var(--tw-text-opacity))",
-            }}
-          >
-            시간
-          </div>
-          {menu == 2 && (
-            <motion.div layoutId="menu" className="h-[2px] w-12 bg-black" />
-          )}
-        </Link>
-        <Link href={"#maps"} scroll={true}>
-          <div
-            onClick={() => menuClick(3)}
-            className="flex h-12 w-12 cursor-pointer items-center justify-center text-gray-400"
-            style={{
-              color:
-                menu == 3
-                  ? "black"
-                  : "rgb(156 163 175 / var(--tw-text-opacity))",
-            }}
-          >
-            지도
-          </div>
-          {menu == 3 && (
-            <motion.div layoutId="menu" className="h-[2px] w-12 bg-black" />
-          )}
-        </Link>
-        <Link href={"#menu"} scroll={true}>
-          <div
-            onClick={() => menuClick(4)}
-            className="flex h-12 w-12 cursor-pointer items-center justify-center text-gray-400"
-            style={{
-              color:
-                menu == 4
-                  ? "black"
-                  : "rgb(156 163 175 / var(--tw-text-opacity))",
-            }}
-          >
-            메뉴
-          </div>
-          {menu == 4 && (
-            <motion.div layoutId="menu" className="h-[2px] w-12 bg-black" />
-          )}
-        </Link>
-        <Link href={"#reviews"} scroll={true}>
-          <div
-            onClick={() => menuClick(5)}
-            className="flex h-12 w-12 cursor-pointer items-center justify-center text-gray-400"
-            style={{
-              color:
-                menu == 5
-                  ? "black"
-                  : "rgb(156 163 175 / var(--tw-text-opacity))",
-            }}
-          >
-            리뷰
-          </div>
-          {menu == 5 && (
-            <motion.div layoutId="menu" className="h-[2px] w-12 bg-black" />
-          )}
-        </Link>
-      </div>
+
+      <Tabs />
       <div className="flex flex-col px-6 py-10">
         <div className="flex scroll-mt-32 justify-between  px-4 " id="home">
           <div className="flex flex-col items-center justify-center">
@@ -281,7 +194,10 @@ export default function Page() {
           <div className="my-2 mb-10 flex flex-col gap-2">
             <div className="flex items-center gap-2">
               <Image
-                src="https://placehold.co/400/png"
+                src={`https://picsum.photos/seed/${new Date()
+                  .toDateString()
+                  .split(" ")
+                  .join("-")}/400/400?random`}
                 alt="profile"
                 width={25}
                 height={25}
@@ -295,7 +211,10 @@ export default function Page() {
           <div className="my-2 mb-10 flex flex-col gap-2">
             <div className="flex items-center gap-2">
               <Image
-                src="https://placehold.co/400/png"
+                src={`https://picsum.photos/seed/${new Date()
+                  .toDateString()
+                  .split(" ")
+                  .join("-")}/400/400?random`}
                 alt="profile"
                 width={25}
                 height={25}
@@ -313,7 +232,7 @@ export default function Page() {
           <div className="my-2 mb-10 flex flex-col gap-2">
             <div className="flex items-center gap-2">
               <Image
-                src="https://placehold.co/400/png"
+                src={`https://picsum.photos/seed/svk/400/400?random=${params.id}`}
                 alt="profile"
                 width={25}
                 height={25}
@@ -327,7 +246,10 @@ export default function Page() {
           <div className="my-2 mb-10 flex flex-col gap-2">
             <div className="flex items-center gap-2">
               <Image
-                src="https://placehold.co/400/png"
+                src={`https://picsum.photos/seed/${new Date()
+                  .toDateString()
+                  .split(" ")
+                  .join("-")}/400/400?random`}
                 alt="profile"
                 width={25}
                 height={25}

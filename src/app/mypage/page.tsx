@@ -3,10 +3,10 @@ import Link from "next/link";
 export default function Page() {
   return (
     <>
-      <header className="grid h-12 w-full place-content-center text-xl font-bold">
+      <header className="grid w-full place-content-center py-4 text-xl font-bold">
         프로필
       </header>
-      <main className="p-8">
+      <main className="min-h-screen p-8">
         <div className="flex items-center gap-3">
           <div className="h-20 w-20  rounded-full bg-blue-100"></div>
           <div>홍길동</div>
